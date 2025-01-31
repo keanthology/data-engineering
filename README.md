@@ -1,2 +1,2 @@
 # data-engineering
-contains all the frequently used scripts in data engineering most especially in Microsoft Azure and Azure Databricks.
+contains the codes and scripts i use in data engineering most especially in Microsoft Azure and Azure Databricks.
