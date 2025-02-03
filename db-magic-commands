@@ -1,0 +1,16 @@
+// list the files and directories in a given filesystem
+%fs
+ls
+
+// list the processes running on the machine where the notebook is being executed.
+%sh
+ps
+
+// lists the files and directories located within /databricks-datasets on the Databricks filesystem
+%fs
+ls /databricks-datasets
+
+// list the contents of a directory in the Databricks File System
+dbutils.fs.ls('databricks-folder/dataset-file')
+
+// 
