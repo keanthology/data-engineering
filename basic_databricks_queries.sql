@@ -107,3 +107,43 @@ FROM employees;
 SELECT CURRENT_DATE();
 SELECT DATE_ADD(CURRENT_DATE(), 7) AS next_week;
 SELECT DATEDIFF('2025-12-01', '2025-06-01') AS days_between;
+
+-- 21. CASE Statements
+SELECT name, salary,
+  CASE 
+    WHEN salary >= 90000 THEN 'High'
+    WHEN salary >= 75000 THEN 'Medium'
+    ELSE 'Low'
+  END AS salary_level
+FROM employees;
+
+-- 22. Delta Lake-Specific Commands
+CREATE TABLE delta_employees (
+  id INT,
+  name STRING,
+  position STRING,
+  salary DOUBLE
+) USING DELTA;
+
+OPTIMIZE delta_employees;
+DESCRIBE HISTORY delta_employees;
+
+-- 23. File and External Table Operations
+CREATE TABLE csv_employees
+USING CSV
+OPTIONS (
+  path 'dbfs:/mnt/data/employees.csv',
+  header 'true',
+  inferSchema 'true'
+);
+
+CREATE TABLE parquet_employees
+USING PARQUET
+OPTIONS (
+  path 'dbfs:/mnt/data/employees.parquet'
+);
+
+-- 24. Permissions and Access Control
+GRANT SELECT ON TABLE employees TO `data_analyst_role`;
+SHOW GRANT ON TABLE employees;
+
