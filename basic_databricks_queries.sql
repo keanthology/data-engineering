@@ -44,7 +44,66 @@ WITH avg_salary AS (
 )
 SELECT * FROM employees WHERE salary > (SELECT avg_sal FROM avg_salary);
 
--- 12. Use UNION
+-- 12. Aggregate Functions
+SELECT COUNT(*) AS total_employees FROM employees;
+SELECT SUM(salary) AS total_salary FROM employees;
+SELECT MIN(salary) AS min_salary FROM employees;
+SELECT MAX(salary) AS max_salary FROM employees;
+SELECT AVG(salary) AS avg_salary FROM employees;
+SELECT STDDEV(salary) AS std_dev FROM employees;
+SELECT VAR_SAMP(salary) AS variance FROM employees;
+SELECT COLLECT_LIST(position) AS all_positions FROM employees;
+SELECT COLLECT_SET(position) AS unique_positions FROM employees;
+
+-- 13. Use UNION
 SELECT name FROM employees WHERE position = 'Data Engineer'
 UNION
 SELECT name FROM employees WHERE position = 'Data Analyst';
+
+-- 14. Table Management
+CREATE TABLE new_employees AS
+SELECT * FROM employees;
+
+DESCRIBE TABLE employees;
+SHOW TABLES IN my_database;
+
+-- 15. Data Types and Casting
+SELECT CAST(salary AS STRING) AS salary_str FROM employees;
+SELECT id, name, salary::STRING AS salary_str FROM employees;
+
+-- 16. Filtering and Sorting
+SELECT * FROM employees WHERE salary > 70000 AND position = 'Data Engineer';
+SELECT * FROM employees ORDER BY salary DESC;
+
+-- 17. Grouping
+SELECT position, AVG(salary) AS avg_salary
+FROM employees
+GROUP BY position;
+
+SELECT position, COUNT(*) AS count
+FROM employees
+GROUP BY position
+HAVING count > 1;
+
+-- 18. Joins
+SELECT a.name, b.department
+FROM employees a
+JOIN departments b ON a.id = b.employee_id;
+
+SELECT a.name, b.department
+FROM employees a
+LEFT JOIN departments b ON a.id = b.employee_id;
+
+-- 19. Window Functions
+SELECT name, salary,
+       ROW_NUMBER() OVER (PARTITION BY position ORDER BY salary DESC) AS row_num
+FROM employees;
+
+SELECT name, salary,
+       SUM(salary) OVER (ORDER BY id) AS running_total
+FROM employees;
+
+-- 20. Date Functions
+SELECT CURRENT_DATE();
+SELECT DATE_ADD(CURRENT_DATE(), 7) AS next_week;
+SELECT DATEDIFF('2025-12-01', '2025-06-01') AS days_between;
