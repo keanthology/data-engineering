@@ -1,0 +1,4 @@
+Why do we format script?
+- easier to understand, debug, and collab
+- clean and readable
+- look professional
